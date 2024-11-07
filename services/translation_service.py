@@ -5,7 +5,7 @@ from services.webhook_service import WebhookService
 
 
 class TranslationService:
-    BASE_URL = "http://localhost:5000/translations/status"
+    BASE_URL = "https://translation-api-backend.vercel.app/translations/status"
     
     @staticmethod
     async def create_translation(request: TranslationRequest) -> JobResponse:
