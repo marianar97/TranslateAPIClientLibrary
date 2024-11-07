@@ -5,7 +5,7 @@ from services.webhook_service import WebhookService
 
 
 class TranslationService:
-    BASE_URL = "https://translationapibackend.onrender.com/translations/status"
+    BASE_URL = "http://localhost:5000/translations/status"
     
     @staticmethod
     async def create_translation(request: TranslationRequest) -> JobResponse:
@@ -19,10 +19,10 @@ class TranslationService:
         return JobResponse(**response.json())
 
     @staticmethod
-    async def get_status(job_id: str) -> JobResponse:
+    async def get_job(job_id: str) -> JobResponse:
         response = requests.get(
             f"{TranslationService.BASE_URL}/{job_id}",
-            timeout=5,
+            timeout=2,
             headers={"Content-Type": "application/json"},
         )
         response.raise_for_status()
@@ -31,7 +31,7 @@ class TranslationService:
     @staticmethod
     async def monitor_job_status(job: JobResponse):
         while True:
-            job = await TranslationService.get_status(job.id)
+            job = await TranslationService.get_job(job.id)
             current_status = job.status
 
             if current_status in [Status.COMPLETED, Status.ERROR]:

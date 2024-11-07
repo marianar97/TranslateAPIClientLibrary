@@ -12,3 +12,7 @@ async def create_translation_job(
     job = await TranslationService.create_translation(request)
     background_tasks.add_task(TranslationService.monitor_job_status, job)
     return job
+
+@app.get("/translation/job/{id}", status_code=200)
+async def get_job(id: str):
+    return await TranslationService.get_job(id)
