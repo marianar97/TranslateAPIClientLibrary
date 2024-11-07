@@ -16,3 +16,7 @@ async def create_translation_job(
 @app.get("/translation/job/{id}", status_code=200)
 async def get_job(id: str):
     return await TranslationService.get_job(id)
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app)
