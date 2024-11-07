@@ -14,8 +14,7 @@ A robust FastAPI application that manages translation jobs with webhook notifica
 
 ```
 app/
-├── __init__.py
-├── main.py          # FastAPI application and routes
+├── client.py          # FastAPI application and routes
 ├── models.py        # Pydantic models and enums
 └── services/
     ├── translation_service.py  # Translation-related operations
@@ -34,8 +33,8 @@ app/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/fastapi-translation-service.git
-cd fastapi-translation-service
+git clone https://github.com/marianar97/TranslateAPIClientLibrary.git
+cd TranslateAPIClientLibrary
 ```
 
 2. Create and activate a virtual environment:
@@ -49,16 +48,19 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Usage
-
-1. Start the server:
+## Running the Application
+1. Using environment variables:
 ```bash
-uvicorn app.main:app --reload
+export PORT=8000
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-2. The API will be available at `http://localhost:8000`
+2. Using uvicorn directly:
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
 
-3. Access the interactive API documentation at `http://localhost:8000/docs`
+The API will be available at `http://localhost:8000`, and you can access the interactive API documentation at `http://localhost:8000/docs`
 
 ## API Endpoints
 
@@ -114,7 +116,7 @@ Key configuration values can be found in their respective service files:
   - `RETRY_DELAY = 5` (seconds)
 
 - `TranslationService`:
-  - `BASE_URL = "https://translationapibackend.onrender.com/translations/status"`
+  - `BASE_URL = "http://localhost:5000/translations/status"`
 
 
 ## Error Handling
